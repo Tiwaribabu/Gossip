@@ -4,9 +4,10 @@ import { View, Text, TouchableOpacity } from "react-native";
 import GlobalContext from "../context/Context";
 import { auth, db } from "../firebase";
 import ContactsFloatingIcon from "../components/ContactsFloatingIcon";
-import ListItem from "../components/ListItem";
+import LisItem from "../components/LisItem";
 import useContacts from "../hooks/useHooks";
 import * as Animatable from 'react-native-animatable';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Chats({ navigation }) {
   const { currentUser } = auth;
@@ -44,14 +45,16 @@ export default function Chats({ navigation }) {
     <Animatable.View animation="fadeIn" style={{ flex: 1, padding: 5, paddingRight: 10 }}>
       <TouchableOpacity style={{}}></TouchableOpacity>
       {rooms.map((room) => (
-        <ListItem
+        <LisItem
           type="chat"
           description={room.lastMessage.text}
           key={room.id}
           room={room}
           time={room.lastMessage.createdAt}
           user={getUserB(room.userB, contacts)}
-        />
+        >
+          <Icon name="comment" size={24} color="black" />
+        </LisItem>
       ))}
       <ContactsFloatingIcon />
     </Animatable.View>

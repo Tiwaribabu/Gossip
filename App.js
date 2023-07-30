@@ -21,6 +21,8 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import LoadingScreen from "./screens/LoadingScreen";
 import ForgotPassword from "./screens/ForgotPassword";
+// Import the SplashScreen component
+import SplashScreen from './screens/SplashScreen';
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -38,32 +40,25 @@ function App({navigation}) {
     theme: { colors },
   } = useContext(Context);
 
-  useEffect(() => {
-    // const unsubscribe = onAuthStateChanged(auth, (user) => {
-    //   setLoading(false);
-    //   if (user) {
-    //     console.log(user);
-    //     setCurrUser(user);
-    //   }
-    // });
-    // return () => unsubscribe();
-  }, []);
-
-  // if (loading) {
-  //   return <Text>Loading...</Text>;
-  //}
-
   return (
     <NavigationContainer>
   
-        <Stack.Navigator screenOptions={{
+        <Stack.Navigator
+          initialRouteName="Splash"
+          screenOptions={{
              headerStyle: {
                backgroundColor: '#064663',
                shadowOpacity: 0,
                elevation: 0,
              },
              headerTintColor: colors.white,
-           }}>
+           }}
+        >
+          <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="LoadingScreen" component={LoadingScreen} options={{headerShown:false}}/>
           <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
           <Stack.Screen name="Register" component={Register}  />
@@ -112,70 +107,25 @@ function Home() {
   } = useContext(Context);
   return (
     <Text></Text>
-    // <Tab.Navigator
-    //   screenOptions={({ route }) => {
-
-    //     return {
-    //       tabBarLabel: () => {
-    //         if (route.name === "photo") {
-    //           return <Ionicons name="camera" size={20} color={colors.white} />;
-    //         } else {
-    //           return (
-    //             <Text style={{ color: colors.white }}>
-    //               {route.name.toLocaleUpperCase()}
-    //             </Text>
-    //           );
-    //         }
-    //       },
-    //       tabBarShowIcon: true,
-    //       tabBarLabelStyle: {
-    //         color: colors.white,
-    //       },
-    //       tabBarIndicatorStyle: {
-    //         backgroundColor: colors.white,
-    //       },
-    //       tabBarStyle: {
-    //         backgroundColor: colors.foreground,
-    //       },
-    //     };
-    //   }}
-    //   initialRouteName="Chats"
-    // >
-    //   {/* <Tab.Screen name="photo" component={Photo} /> */}
-    //   <Tab.Screen name="Chats" component={Chats}   />
-    // </Tab.Navigator>
-  );
-}
-
-function Main() {
-  const [assets] = useAssets(
-    require("./assets/icon-square.png"),
-    require("./assets/chatbg.png"),
-    require("./assets/user-icon.png"),
-    require("./assets/welcome-img.png")
-  );
-  if (!assets) {
-    return <Text>Loading ..</Text>;
+    
+    );
   }
-  return (
-    <ContextWrapper>
-      <App />
-    </ContextWrapper>
-  );
-}
-
-export default Main;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+  function Main() {
+    const [assets] = useAssets(
+      require("./assets/icon-square.png"),
+      require("./assets/chatbg.png"),
+      require("./assets/user-icon.png"),
+      require("./assets/welcome-img.png")
+    );
+    if (!assets) {
+      return <Text>Loading ..</Text>;
+    }
+    return (
+      <ContextWrapper>
+        <App />
+      </ContextWrapper>
+    );
+  }
+  
+  export default Main;

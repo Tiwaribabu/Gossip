@@ -2,11 +2,12 @@ import { collection, onSnapshot, query, where } from "@firebase/firestore";
 import { useRoute } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
-import ListItem from "../components/ListItem";
+import ListItem from "../components/LisItem";
 import GlobalContext from "../context/Context";
 import { db } from "../firebase";
 import useContacts from "../hooks/useHooks";
 import * as Animatable from 'react-native-animatable';
+
 
 export default function Contacts() {
   const contacts = useContacts();

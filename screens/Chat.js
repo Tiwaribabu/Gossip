@@ -1,32 +1,14 @@
 // @refresh reset
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { View, Text, ImageBackground, TouchableOpacity, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { auth, db } from "../firebase";
 import GlobalContext from "../context/Context";
-import {
-  addDoc,
-  collection,
-  doc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-} from "@firebase/firestore";
-import {
-  Actions,
-  Bubble,
-  GiftedChat,
-  InputToolbar,
-} from "react-native-gifted-chat";
+import { addDoc, collection, doc, onSnapshot, setDoc, updateDoc } from "@firebase/firestore";
+import { Actions, Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
 import { pickImage, uploadImage } from "../utils";
 import ImageView from "react-native-image-viewing";
 
@@ -36,10 +18,8 @@ export default function Chat() {
   const [roomHash, setRoomHash] = useState("");
   const [messages, setMessages] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImageView, setSeletedImageView] = useState("");
-  const {
-    theme: { colors },
-  } = useContext(GlobalContext);
+  const [selectedImageView, setSelectedImageView] = useState("");
+  const { theme: { colors } } = useContext(GlobalContext);
   const { currentUser } = auth;
   const route = useRoute();
   const room = route.params.room;
@@ -55,7 +35,6 @@ export default function Chat() {
     : { name: currentUser.displayName, _id: currentUser.uid };
 
   const roomId = room ? room.id : randomId;
-
   const roomRef = doc(db, "rooms", roomId);
   const roomMessagesRef = collection(db, "rooms", roomId, "messages");
 
@@ -240,7 +219,7 @@ export default function Chat() {
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(true);
-                  setSeletedImageView(props.currentMessage.image);
+                  setSelectedImageView(props.currentMessage.image);
                 }}
               >
                 <Image
